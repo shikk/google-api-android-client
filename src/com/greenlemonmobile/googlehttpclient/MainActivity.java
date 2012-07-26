@@ -63,35 +63,6 @@ public class MainActivity extends Activity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
-        NetHttpTransport httpTransport2 = new NetHttpTransport();
-        try {
-            LowLevelHttpRequest httpRequest = httpTransport2.buildGetRequest("http://ibooksreader.googlecode.com/files/latest_version.json");
-
-            LowLevelHttpResponse httpResponse = httpRequest.execute();
-            if (httpResponse.getStatusCode() == 200) {
-                httpResponse.getContentType();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-        int callsBeforeSuccess = 3;
-        MockHttpTransport fakeTransport = new MockHttpTransport();
-        HttpRequest req;
-        try {
-            req = fakeTransport.createRequestFactory().buildGetRequest(new GenericUrl("http://www.baidu.com/"));
-            req.setRetryOnExecuteIOException(true);
-            req.setNumberOfRetries(callsBeforeSuccess + 1);
-            HttpResponse resp = req.execute();
-            if (!resp.isSuccessStatusCode()) {
-            } else {
-                
-            }
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
     }
 
     @Override
