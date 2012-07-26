@@ -14,8 +14,12 @@ import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.HttpUnsuccessfulResponseHandler;
+import com.google.api.client.http.LowLevelHttpRequest;
+import com.google.api.client.http.LowLevelHttpResponse;
+import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.http.json.JsonHttpParser;
 import com.google.api.client.json.jackson.JacksonFactory;
+import com.google.api.client.testing.http.MockHttpTransport;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -57,6 +61,35 @@ public class MainActivity extends Activity {
             if (!httpResponse.isSuccessStatusCode()) {
             }
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        NetHttpTransport httpTransport2 = new NetHttpTransport();
+        try {
+            LowLevelHttpRequest httpRequest = httpTransport2.buildGetRequest("http://ibooksreader.googlecode.com/files/latest_version.json");
+
+            LowLevelHttpResponse httpResponse = httpRequest.execute();
+            if (httpResponse.getStatusCode() == 200) {
+                httpResponse.getContentType();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        int callsBeforeSuccess = 3;
+        MockHttpTransport fakeTransport = new MockHttpTransport();
+        HttpRequest req;
+        try {
+            req = fakeTransport.createRequestFactory().buildGetRequest(new GenericUrl("http://www.baidu.com/"));
+            req.setRetryOnExecuteIOException(true);
+            req.setNumberOfRetries(callsBeforeSuccess + 1);
+            HttpResponse resp = req.execute();
+            if (!resp.isSuccessStatusCode()) {
+            } else {
+                
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
